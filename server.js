@@ -15,7 +15,7 @@ const auth = require('./api/routes/auth');
 const dev = process.env.NODE_ENV !== 'production';
 
 const app = next({dev});
-const handler = routes.getRequestHandler(app);
+// const handler = routes.getRequestHandler(app);
 
 app.prepare()
   .then(() => {
@@ -36,16 +36,35 @@ app.prepare()
     server.use('/api/auth', auth);
     server.use('/api/api', api);
 
+    const handler = routes.getRequestHandler(app, ({req, res, route, query}) => {
+
+      try {
+        console.log('>>>>', req.session.passport.user);
+      } catch (e) {}
+      app.render(req, res, route.page, query)
+    })
+
     server.use(handler);
 
     https.createServer({
       key: fs.readFileSync('key.pem'),
       cert: fs.readFileSync('cert.pem')
-    }, server).listen(4100);
+    }, server).listen(config.PORT);
 
-    server.listen(config.PORT, (err) => {
-      if (err) throw err;
-      console.log(`> Ready on port ${config.PORT}`);
+    console.log('> PORt', config.PORT);
+
+    server.on('listening', function () {
+      const addr = server.address();
+      const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
+
+      console.log('Listening on ' + bind);
     });
+
+
+
+    // server.listen(config.PORT, (err) => {
+    //   if (err) throw err;
+    //   console.log(`> HTTP: Ready on port ${config.PORT}`);
+    // });
   });
 
