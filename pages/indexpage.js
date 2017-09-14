@@ -6,6 +6,7 @@ import MuiThemeProvider     from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme          from 'material-ui/styles/getMuiTheme';
 
 import LoginForm from '../components/loginform';
+import SearchForm from '../components/searchform';
 
 const muiTheme = getMuiTheme({ userAgent: false });
 
@@ -32,7 +33,10 @@ class IndexPage extends Component {
 
   getSearchForm () {
     return (
-      <div>you have logged in <a href="/api/auth/logout">logout</a></div>
+      <div>
+        you have logged in <a href="/api/auth/logout">logout</a>
+        <SearchForm />
+      </div>
     )
   }
 
