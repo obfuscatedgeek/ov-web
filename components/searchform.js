@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
 import request from 'superagent';
+import Paper from 'material-ui/Paper';
+
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+import Divider from 'material-ui/Divider';
+import {List, ListItem} from 'material-ui/List';
+
 import config from '../conf/env-config';
 
 class SearchForm extends Component {
@@ -22,18 +29,26 @@ class SearchForm extends Component {
     let index = 0;
 
     for (const key in this.state.demographics) {
-      demo.push((<div key={index++}>{key}: {this.state.demographics[key]}</div>))
+      demo.push((<ListItem primaryText={key} secondaryText={this.state.demographics[key]} key={index++} />));
     }
 
-    return demo;
+    return (<div><h2>Demographics</h2><List>{demo}</List></div>);
   }
 
   render () {
+
+    const btn_style = {
+      margin: '12px'
+    };
     return (
       <div>
-        <input type="text" value={this.state.text_value} onChange={this.onTextChange}/>
-        <input type="button" value="Search" onClick={this.onSearchClick}/>
-        <input type="button" value="Clear" onClick={this.onClearClick}/>
+        <div>
+          <TextField fullWidth={true} floatingLabelText="Enter a US City" value={this.state.text_value} onChange={this.onTextChange} />
+        </div>
+        <div>
+        <RaisedButton style={btn_style} primary={true} label="Search" onClick={this.onSearchClick}/>
+        <RaisedButton style={btn_style} label="Clear" onClick={this.onClearClick}/>
+        </div>
         {this.getDemographics()}
       </div>
     );
@@ -42,7 +57,7 @@ class SearchForm extends Component {
   onClearClick (e) {
     e.preventDefault();
 
-    this.setState({demographics: null});
+    this.setState({demographics: null, text_value: ''});
   }
 
   onTextChange (e) {
