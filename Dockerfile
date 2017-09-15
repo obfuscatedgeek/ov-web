@@ -10,6 +10,7 @@ COPY package.json /usr/src/app/
 RUN npm install
 
 RUN npm install next
+RUN npm install babel-plugin-transform-define
 
 # Bundle app source
 COPY . /usr/src/app
