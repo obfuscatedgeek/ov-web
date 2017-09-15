@@ -20,7 +20,6 @@
     "express": "^4.15.4",
     "express-session": "^1.15.5",
     "material-ui": "^0.19.1",
-    "next": "^3.2.2",
     "next-routes": "^1.0.40",
     "passport": "^0.4.0",
     "passport-pinterest": "^1.0.0",
