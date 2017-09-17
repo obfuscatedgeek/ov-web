@@ -46,25 +46,25 @@ app.prepare()
 
     server.use(handler);
 
-    https.createServer({
-      key: fs.readFileSync('key.pem'),
-      cert: fs.readFileSync('cert.pem')
-    }, server).listen(config.PORT);
+    // https.createServer({
+    //   key: fs.readFileSync('key.pem'),
+    //   cert: fs.readFileSync('cert.pem')
+    // }, server).listen(config.PORT);
 
-    console.log('> PORt', config.PORT);
+    // console.log('> PORt', config.PORT);
 
-    server.on('listening', function () {
-      const addr = server.address();
-      const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
+    // server.on('listening', function () {
+    //   const addr = server.address();
+    //   const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
 
-      console.log('Listening on ' + bind);
-    });
-
-
-
-    // server.listen(config.PORT, (err) => {
-    //   if (err) throw err;
-    //   console.log(`> HTTP: Ready on port ${config.PORT}`);
+    //   console.log('Listening on ' + bind);
     // });
+
+
+
+    server.listen(config.PORT, (err) => {
+      if (err) throw err;
+      console.log(`> HTTP: Ready on port ${config.PORT}`);
+    });
   });
 
